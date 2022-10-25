@@ -1,11 +1,15 @@
 #ifndef FILE_TESTING_INOUT_TESTER_C_H
 #define FILE_TESTING_INOUT_TESTER_C_H
+#define IN_FILE_PATH "../in.txt"
+//OUT_E stands for expected program output
+#define OUT_E_FILE_PATH "../out_e.txt"
+#define OUT_FILE_PATH "../out.txt"
 #include <fstream>
 #include <string>
 
-//Default function to read from files
+//Default function to read from files for char
 void read_c(char &variable){
-    std::ifstream program_input("../in.txt");
+    std::ifstream program_input(IN_FILE_PATH);
     static int input_file_iterator = 0;
     char trash_temp;
 
@@ -26,20 +30,21 @@ void read(auto &variable){
 }
 
 void write(auto thing_to_write_to_file){
-    std::ofstream program_output("../out.txt", std::ofstream::app);
+    std::ofstream program_output(OUT_FILE_PATH, std::ofstream::app);
     program_output << thing_to_write_to_file;
     program_output.close();
 }
 
 void clear_program_output_file(){
-    std::ofstream clear_output("../out.txt");
+    std::ofstream clear_output(OUT_FILE_PATH);
     clear_output << "";
     clear_output.close();
 }
 
+//Main function to test difference between out file and out_e
 bool test_output_file(){
-    std::ifstream in_program_output("../out.txt");
-    std::ifstream in_expected_output("../out_e.txt");
+    std::ifstream in_program_output(OUT_FILE_PATH);
+    std::ifstream in_expected_output(OUT_E_FILE_PATH);
 
     std::string program_output_line;
     std::string expected_output_line;
@@ -51,9 +56,9 @@ bool test_output_file(){
 
         if(program_output_line != expected_output_line){
             std::cout<<"Output from program is different than in expected output!\n";
-            std::cout<<"Line number : "<<line_number;
-            std::cout<<"Expected : "<<expected_output_line;
-            std::cout<<"Got : "<<program_output_line;
+            std::cout<<"Line number : "<<line_number<<"\n";
+            std::cout<<"Expected : "<<expected_output_line<<"\n";
+            std::cout<<"Got : "<<program_output_line<<"\n";
 
             in_program_output.close();
             in_expected_output.close();
