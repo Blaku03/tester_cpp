@@ -70,7 +70,7 @@ bool test_output_file(){
 
     in_program_output.close();
     in_expected_output.close();
-
+    std::cout<<"Program output is the same as expected output";
     return true;
 }
 
